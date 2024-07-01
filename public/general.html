@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Scoracle - AI Powered Football Predictor</title>
+    <meta name="description" content="Scoracle - AI Powered Football Predictor. Get accurate football predictions and match analysis for various leagues. 
+      Enhance your betting decisions with our intelligent predictions based on statistical analysis." />
+
+    <!--Google font-->
+    <link href="https://fonts.googleapis.com/css?family=K2D:300,400,500,700,800" rel="stylesheet" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet" />
+
+    <link href="https://github.com/mezardini/scoracle_fullstack/blob/master/scoracle.svg" rel="icon" />
+    <!-- Bootstrap CSS / Color Scheme -->
+    <link rel="stylesheet"
+        href="https://unpjrqoipuwqbtfujfjf.supabase.co/storage/v1/object/sign/acclaimtrove/page1.css?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhY2NsYWltdHJvdmUvcGFnZTEuY3NzIiwiaWF0IjoxNzE5NzYwNzc4LCJleHAiOjE3NTEyOTY3Nzh9.lZ3vuVJ6Cozb_7-DBMnaURWWRvolNWySNrRkl5j7SjU&t=2024-06-30T15%3A19%3A37.574Z" />
+    <link rel="stylesheet" href="css/fontawesome.css" />
+    <link rel="stylesheet" href="css/fontawesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+
+</head>
+
+<body>
+    <!--Header Section-->
+    <section class="bg-gradient pt-5 pb-6">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 d-flex flex-row align-items-center justify-content-between">
+                    <div class="heading-brand">Scoracle</div>
+
+                    <a href="" class="btn btn-dark">Try It</a>
+                </div>
+            </div>
+
+            <div class="row mt-5" style="margin-top: 5%">
+                <div class="col-md-12 mx-auto">
+                    <div class="code-window">
+                        <div class="text-center">
+                            <h6>
+                               General Predictions
+                                <button onclick="copyCode()" class="btn btn-success">
+                                    <i class="far fa-copy"></i>
+                                </button>
+                            </h6>
+                        </div>
+                        <pre class="text-center codeCopy">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">Prediction</th>
+                              <th scope="col">Over 2.5</th>
+                              <th scope="col">Over 1.5</th>
+                              <th scope="col">League</th>
+                              <th scope="col">Top Probable Scorelines</th>
+                            </tr>
+                          </thead>
+                          <tbody id="resultDataGeneral">
+                            <!-- <tr></tr> -->
+                          </tbody>
+                        </table>
+                      
+                    </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+
+
+    <!--footer-->
+    <footer class="py-5 bg-light">
+        <div class="container">
+            <div class="row my-2">
+                <div class="col-md-4 mx-auto text-muted text-center small-xl">
+                    &copy; 2024 Scoracle - All Rights Reserved
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.7.3/feather.min.js"></script>
+
+    <script>
+        function copyCode() {
+            var code = document.querySelector(".codeCopy");
+            var range = document.createRange();
+            range.selectNode(code);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand("copy");
+            window.getSelection().removeAllRanges();
+        }
+    </script>
+    <script>
+        // Retrieve the result data from localStorage
+        const resultData = JSON.parse(localStorage.getItem('resultDataGeneral'));
+        if (resultData && resultData.length > 0) {
+            const tableBody = document.getElementById('resultDataGeneral');
+            resultData.forEach(prediction => {
+                const row = document.createElement('tr');
+
+                const predictionCell = document.createElement('td');
+                predictionCell.textContent = prediction['prediction'] || prediction.prediction;
+                row.appendChild(predictionCell);
+
+                const over25Cell = document.createElement('td');
+                over25Cell.textContent = prediction['over_2.5_prob'] || prediction.over_2_5_prob || prediction.over25; // Adjust key as per response
+                row.appendChild(over25Cell);
+
+                const over15Cell = document.createElement('td');
+                over15Cell.textContent = prediction['over_1.5_prob'] || prediction.over_1_5_prob || prediction.over15; // Adjust key as per response
+                row.appendChild(over15Cell);
+
+                const LeagueCell = document.createElement('td');
+                LeagueCell.textContent = prediction['league'] || prediction.league;
+                row.appendChild(LeagueCell);
+
+                const ScorelinesCell = document.createElement('td');
+                ScorelinesCell.textContent = prediction.top_scorelines;
+                row.appendChild(ScorelinesCell);
+
+                tableBody.appendChild(row);
+            });
+        } else {
+            document.getElementById('resultData').innerHTML = '<tr><td colspan="3">No predictions available</td></tr>';
+        }
+    </script>
+
+</body>
+
+</html>
