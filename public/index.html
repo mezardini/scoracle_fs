@@ -386,7 +386,7 @@
       const league = formData.get('league');
 
       // Fetch data from the backend
-      fetch('http://127.0.0.1:8000/api/leagueprediction/', {
+      fetch('https://web-dhx5ovj5jdys.up-de-fra1-k8s-1.apps.run-on-seenode.com/api/leagueprediction/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -408,7 +408,7 @@
       event.preventDefault();
 
       // Fetch data from the backend
-      fetch('http://127.0.0.1:8000/api/generalprediction/', {
+      fetch('https://web-dhx5ovj5jdys.up-de-fra1-k8s-1.apps.run-on-seenode.com/api/generalprediction/', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
